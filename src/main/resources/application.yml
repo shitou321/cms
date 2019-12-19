@@ -1,0 +1,56 @@
+#############################################项目自动化配置#############################################
+cms:
+  #项目名称，简介#
+  project:
+    Name: xxxxxx
+    Brief: xxxxxx
+  druid:
+    username: admin
+    password: admin
+
+#服务器#
+server:
+  port: 80
+  undertow:
+    io-threads: 4
+    buffer-size: 1024
+    worker-threads: 16
+    direct-buffers: true
+
+#############################################logBack#############################################
+logging:
+  config:
+    classpath: logback.xml
+#############################################Spring#############################################
+spring:
+  #配置模板引擎
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    cache: false
+  application:
+    name: cms
+  datasource:
+    name: druidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://123.126.34.6:3306/mycms?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8
+      username: root
+      password: mqpass0o0
+      filters: stat,wall,config
+      max-active: 100
+      initial-size: 1
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 50
+      max-pool-prepared-statement-per-connection-size: 20
+
