@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,8 +75,6 @@ public class LoginController {
     @ResponseBody
     public HttpResult httpLogin(HttpServletRequest request, String username, String password, String captcha, boolean remember) {
 
-        System.out.printf("request" + username + password + captcha + remember);
-
         // 从session中获取之前保存的验证码跟前台传来的验证码进行匹配
         Object kaptcha = request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if (kaptcha == null) {
@@ -113,21 +110,5 @@ public class LoginController {
             log.error(e.toString());
             return HttpResult.error("登录认证失败");
         }
-
-
-    }
-
-    /*注销*/
-    @GetMapping("/logout")
-    public String logout() {
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-        return prefix + "login";
-    }
-
-    /*权限认证失败*/
-    @GetMapping("/unauth")
-    public String unauth() {
-        return prefix + "unauth";
     }
 }

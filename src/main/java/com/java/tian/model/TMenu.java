@@ -1,7 +1,9 @@
 package com.java.tian.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * t_menu
@@ -77,6 +79,17 @@ public class TMenu implements Serializable {
      * 备注
      */
     private String remark;
+
+    /** 子菜单 */
+    private List<TMenu> children = new ArrayList<TMenu>();
+
+    public List<TMenu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<TMenu> children) {
+        this.children = children;
+    }
 
     private static final long serialVersionUID = 1L;
 

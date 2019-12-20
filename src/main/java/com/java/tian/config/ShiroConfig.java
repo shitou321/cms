@@ -24,8 +24,6 @@ import java.util.Properties;
 @Configuration
 public class ShiroConfig {
 
-    private static final Logger log = LoggerFactory.getLogger(ShiroConfig.class);
-
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -35,7 +33,7 @@ public class ShiroConfig {
         //身份认证成功跳转页面
         shiroFilterFactoryBean.setSuccessUrl("/index");
         //权限认证失败跳转地址
-        shiroFilterFactoryBean.setUnauthorizedUrl("/unauth");
+        //shiroFilterFactoryBean.setUnauthorizedUrl("/unauth");
         LinkedHashMap<String, String> filterMap = new LinkedHashMap<>();
         //静态资源设置匿名访问
         filterMap.put("/js/**", "anon");
@@ -56,11 +54,11 @@ public class ShiroConfig {
     //解决 shiroFilterFactoryBean.setUnauthorizedUrl("/unauth");无效
     @Bean
     public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
-        SimpleMappingExceptionResolver simpleMappingExceptionResolver = new SimpleMappingExceptionResolver();
+        SimpleMappingExceptionResolver Resolver = new SimpleMappingExceptionResolver();
         Properties properties = new Properties();
-        properties.setProperty("org.apache.shiro.authz.UnauthorizedException", "/unauth");
-        simpleMappingExceptionResolver.setExceptionMappings(properties);
-        return simpleMappingExceptionResolver;
+        properties.setProperty("org.apache.shiro.authz.UnauthorizedException", "/error/unauth");
+        Resolver.setExceptionMappings(properties);
+        return Resolver;
     }
 
     // 注入自定义的realm，告诉shiro如何获取用户信息来做登录或权限控制

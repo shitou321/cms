@@ -1,5 +1,7 @@
 package com.java.tian.shiro;
 
+import com.java.tian.sercice.MenuService;
+import com.java.tian.sercice.RoleService;
 import com.java.tian.sercice.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -10,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.java.tian.model.TUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,6 +29,12 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private MenuService menuService;
+    @Value("${cms.admin.LoginName}")
+    private String LoginName;
 
     /**
      * 自定义认证授权
@@ -35,23 +45,26 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         log.info("------------权限认证---------");
-        TUser user = (TUser) getAvailablePrincipal(principals);
-        System.out.printf("==========" + user.toString());
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 角色列表
         Set<String> roles = new HashSet<String>();
         // 功能列表
         Set<String> menus = new HashSet<String>();
-/*      List<Role> list = this.iRoleService.findUserRole(user.getNickname());
-        Set<String> set = new HashSet<String>();
-        for (Role r : list) {
-            set.add(r.getName());
+        TUser user = (TUser) getAvailablePrincipal(principals);
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        if (LoginName.equals(user.getLoginName())) {
+            info.addRole("admin");
+            info.addStringPermission("*:*:*");
+        } else {
+            roles = roleService.selectRoleKeys(user.getUserId());
+            menus = menuService.selectPermsByUserId(user.getUserId());
+            // 角色加入AuthorizationInfo认证对象
+            System.out.printf("roles" + roles.toString());
+            System.out.printf("menus" + menus.toString());
+            info.setRoles(roles);
+            // 权限加入AuthorizationInfo认证对象
+            info.setStringPermissions(menus);
         }
-        Set<String> perms = new HashSet<String>();
-        List<Permission> list1 = this.iPermissionService.findRolePerm(user.getNickname());
-        for(Permission p : list1) {
-            perms.add(p.getUrl());
-        }*/
+
         info.setRoles(roles);//添加角色集合   @RequireRoles("")
         info.setStringPermissions(menus);// 添加权限集合 @RequiresPermissions("")
         return info;
