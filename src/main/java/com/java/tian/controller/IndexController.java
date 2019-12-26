@@ -27,6 +27,12 @@ public class IndexController {
     @Autowired
     private MenuService menuService;
 
+    /**
+     * 首页
+     *
+     * @param map
+     * @return
+     */
     @GetMapping("/index")
     public String index(ModelMap map) {
         //当前用户信息
@@ -39,9 +45,43 @@ public class IndexController {
         return prefix + "index";
     }
 
+    /**
+     * 家
+     *
+     * @return
+     */
     @GetMapping("/home")
     public String home() {
         return prefix + "home";
     }
 
+    /**
+     * 基本资料
+     *
+     * @return
+     */
+    @GetMapping("/basic")
+    public String Basic() {
+        return prefix + "people/basic";
+    }
+
+    /**
+     * 变更密码
+     *
+     * @return
+     */
+    @GetMapping("/change")
+    public String change() {
+        return prefix + "people/change";
+    }
+
+    /**
+     * 消息中心
+     *
+     * @return
+     */
+    @GetMapping("/message")
+    public String message() {
+        return prefix + "people/message";
+    }
 }

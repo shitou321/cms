@@ -26,7 +26,7 @@
             </ul>
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
                 <li class="layui-nav-item" lay-unselect>
-                    <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
+                    <a lay-href="/message" layadmin-event="message" lay-text="消息中心">
                         <i class="layui-icon layui-icon-notice"></i>
 
                         <!-- 如果有新消息，则显示小圆点 -->
@@ -48,8 +48,8 @@
                         <cite>[[${user.userName}]]</cite>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a th:href="@{/dddddd}">基本资料</a></dd>
-                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                        <dd><a lay-href="/basic">基本资料</a></dd>
+                        <dd><a lay-href="/change">修改密码</a></dd>
                         <hr>
                         <dd style="text-align: center;"><a th:href="@{/logout}">退出</a></dd>
                     </dl>
@@ -84,7 +84,7 @@
                             </dd>
                         </dl>
                     </li>
-                    <!--功能菜单-->
+                    <!--功能菜单 这个方式只支持二级菜单-->
                     <li class="layui-nav-item" th:each="menu:${menus}">
                         <a href="javascript:;" th:lay-tips="${menu.menuName}" lay-direction="2">
                             <i th:class="${menu.icon}"></i>

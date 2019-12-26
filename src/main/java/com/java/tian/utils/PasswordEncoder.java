@@ -96,12 +96,12 @@ public class PasswordEncoder {
         return hexDigits[d1] + hexDigits[d2];
     }
 
-	/*public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		String salt = "111111";
 		PasswordEncoder encoderMd5 = new PasswordEncoder(salt, "MD5");
 		String encode = encoderMd5.encode("admin");
+        System.out.printf("f84c7eac0b4fcb632132f81103d83d45");
 		System.out.println(encode);
-
 	}*/
 
 }

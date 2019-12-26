@@ -31,11 +31,11 @@ public class IMenuService implements MenuService {
      */
     @Override
     public Set<String> selectPermsByUserId(Integer userId) {
-        List<TMenu> lists = tMenuMapper.selectPermsByUserId(userId);
+        List<TMenu> perms = tMenuMapper.selectPermsByUserId(userId);
         Set<String> set = new HashSet<>();
-        for (TMenu list : lists) {
-            if (list != null) {
-                set.addAll(Arrays.asList(list.getPerms().trim().split(",")));
+        for (TMenu perm : perms) {
+            if (perm != null) {
+                set.addAll(Arrays.asList(perm.getPerms().trim().split(",")));
             }
         }
         return set;
